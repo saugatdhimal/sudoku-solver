@@ -34,7 +34,7 @@ module.exports = function (app) {
         let validRegion = solver.checkRegionPlacement(puzzle,row,column,value);
         let conflicts = [];
         if(validRow && validColumn && validRegion){
-          res.json({valid: true})
+          return res.json({valid: true})
         }else{
         if(!validRow){
           conflicts.push("row")
@@ -45,7 +45,7 @@ module.exports = function (app) {
         if(!validRegion){
           conflicts.push("region")
         }
-        res.json({valid: false, conflict: conflicts})
+        return res.json({valid: false, conflict: conflicts})
         }
     });
     
@@ -67,10 +67,10 @@ module.exports = function (app) {
       let board = solver.stringToGrid(puzzle);
       let newboard = solver.solve(board);
       if(newboard.includes("0")){
-        res.json({ error: 'Puzzle cannot be solved' })
+        return res.json({ error: 'Puzzle cannot be solved' })
       }
       if(/[1-9]/.test(newboard)){
-        res.json({solution: newboard})
+        return res.json({solution: newboard})
       }
     });
 };
